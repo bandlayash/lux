@@ -18,7 +18,7 @@ while running:
     pygame.draw.circle(screen, "red", player_pos, 40)
     keys = pygame.key.get_pressed()
 
-
+    # WASD functionality
     if keys[pygame.K_w]:
         player_pos.y -= 300 * dt
     if keys[pygame.K_s]:
