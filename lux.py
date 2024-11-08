@@ -15,14 +15,14 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill("purple")
+    screen.fill((255, 255, 255))
     pygame.draw.circle(screen, "blue", player_pos, 40)
     keys = pygame.key.get_pressed()
 
     #fps counter
     fps = fps_counter(clock)
     font = pygame.font.Font("C:\Windows\Fonts\SHOWG.ttf", 30)
-    fps_text = font.render(f"FPS: {fps:.2f}", True, (255, 255, 255))
+    fps_text = font.render(f"FPS: {fps:.2f}", True, (0, 0, 0))
     screen.blit(fps_text, (10, 10))
     
 
