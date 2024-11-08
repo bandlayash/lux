@@ -15,7 +15,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     screen.fill("purple")
-    pygame.draw.circle(screen, "red", player_pos, 40)
+    pygame.draw.circle(screen, "blue", player_pos, 40)
     keys = pygame.key.get_pressed()
 
     # WASD functionality
