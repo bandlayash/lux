@@ -1,40 +1,54 @@
-#imports
+# imports
 import pygame
 
-#initialize pygame
+# initialize pygame
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
 dt = 0
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+# Initial settings for player
+player_pos = pygame.Vector2(50, screen.get_height() - 50)  # Bottom-left corner position
+player_angle = 0  # Angle in degrees
+rotation_speed = 200  # Rotation speed in degrees per second
+
+# FPS counter function
 fps_counter = pygame.time.Clock.get_fps
 
 while running:
-    #quit window
+    # quit window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    # Clear screen
     screen.fill((255, 255, 255))
-    pygame.draw.circle(screen, "blue", player_pos, 40)
+
+    # Get keyboard input
     keys = pygame.key.get_pressed()
 
-    #fps counter
+    # Rotation with A and D keys
+    if keys[pygame.K_a]:
+        player_angle += rotation_speed * dt
+    if keys[pygame.K_d]:
+        player_angle -= rotation_speed * dt
+
+    # Drawing the rotated rectangle
+    rect_surface = pygame.Surface((50, 200), pygame.SRCALPHA)  # Create a new surface for the rectangle
+    pygame.draw.rect(rect_surface, "black", (0, 0, 50, 200))
+    rotated_surface = pygame.transform.rotate(rect_surface, player_angle)
+    rotated_rect = rotated_surface.get_rect(center=player_pos)  # Update position to center of rotation
+    screen.blit(rotated_surface, rotated_rect.topleft)
+
+    # FPS counter
     fps = fps_counter(clock)
     font = pygame.font.Font("C:\Windows\Fonts\SHOWG.ttf", 30)
     fps_text = font.render(f"FPS: {fps:.2f}", True, (0, 0, 0))
     screen.blit(fps_text, (10, 10))
-    
 
-    # WASD functionality
-    if keys[pygame.K_w]:
-        player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
-        player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        player_pos.x += 300 * dt
+    # Update display and timing
     pygame.display.flip()
-    dt = clock.tick(120) / 1000
+    dt = clock.tick(60) / 1000
+
 pygame.quit()
