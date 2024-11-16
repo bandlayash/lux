@@ -16,6 +16,11 @@ async def main():
     player_angle = 0  # Angle in degrees
     rotation_speed = 200  # Rotation speed in degrees per second
 
+    #flashlight sprite
+    player_sprite = pygame.image.load("flashlight.png").convert_alpha()  # Add transparency support
+    player_sprite = pygame.transform.scale(player_sprite, (player_sprite.get_width() // 2, player_sprite.get_height() // 2))  # Match your current rectangle size
+
+
     # FPS counter function
     fps_counter = pygame.time.Clock.get_fps
     while True:
@@ -37,9 +42,9 @@ async def main():
             player_angle -= rotation_speed * dt
 
         # Drawing the rotated rectangle
-        rect_surface = pygame.Surface((50, 200), pygame.SRCALPHA)  # Create a new surface for the rectangle
-        pygame.draw.rect(rect_surface, "black", (0, 0, 50, 200))
-        rotated_surface = pygame.transform.rotate(rect_surface, player_angle)
+        #rect_surface = pygame.Surface((50, 200), pygame.SRCALPHA)  # Create a new surface for the rectangle
+        #pygame.draw.rect(rect_surface, "black", (0, 0, 50, 200))
+        rotated_surface = pygame.transform.rotate(player_sprite, player_angle)
         rotated_rect = rotated_surface.get_rect(center=player_pos)  # Update position to center of rotation
         screen.blit(rotated_surface, rotated_rect.topleft)
 
@@ -53,6 +58,8 @@ async def main():
         pygame.display.flip()
         dt = clock.tick(60) / 1000
         await asyncio.sleep(0)
+        
 asyncio.run(main())
+
 
     
